@@ -1,7 +1,8 @@
 import pandas as pd
 from google.oauth2.service_account import Credentials
 from googleapiclient.discovery import build
-from requests import Request
+
+from src.utils import to_snake_case
 
 # Authenticate and build the service
 def auth_gsheet(sheet_access_key,
@@ -51,10 +52,13 @@ def load_gsheet(sheet_url, sheet_access_key):
     for sheet in sheet_names:
         df = connect_to_sheet(sheet, sheet_url, service)
         data_dict[sheet] = df
+        # change the column names to snake case
+        if df is not None:
+            df.columns = [to_snake_case(col) for col in df.columns]
     return data_dict
 
 
-def concatonate_entries(surf_data_dict):
+def concatenate_entries(surf_data_dict):
     # Keep the sheets that have the data (i.e. labeled by the year)
     numeric_sheets = [sheet_name for sheet_name in surf_data_dict if sheet_name.isdigit()]
 

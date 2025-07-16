@@ -1,6 +1,9 @@
 import re
 import pandas as pd
 import statistics
+import matplotlib.pyplot as plt
+from datetime import datetime
+import os
 
 # function to assert that two dataframes have the same number of rows
 def check_row_counts(df1, df2):
@@ -71,3 +74,42 @@ def assign_season(month):
         return 'Fall'
     else:
         return 'Unknown'  # Handle cases outside the 1-12 range
+
+
+def check_n_distinct(df, col):
+    val_counts = df[col].value_counts().reset_index().sort_values(by=col)
+    for row in val_counts.itertuples():
+        print(f"{row[1]}: {row[2]}")
+
+
+# save two versions of a file, 
+# 1. undated, in main folder
+# 2. dated, in a subfolder with the current date (to keep historical versions)
+def save_plt_dated(plot_folder, filename):
+    current_date = datetime.now().strftime("%Y%m%d")
+    filename_dated = f'{current_date}_{filename}'
+    
+    output_file_path = os.path.join(plot_folder, filename)
+    output_file_path_dated = os.path.join(plot_folder, current_date, filename_dated)
+    # if output_file_path_dated doesn't exist, create the folder
+    if not os.path.exists(os.path.dirname(output_file_path_dated)):
+        os.makedirs(os.path.dirname(output_file_path_dated))
+
+    plt.savefig(output_file_path)
+    plt.savefig(output_file_path_dated)
+
+# save two versions of a file, 
+# 1. undated, in main folder
+# 2. dated, in a subfolder with the current date (to keep historical versions)
+def save_csv_dated(plot_folder, filename, df):
+    current_date = datetime.now().strftime("%Y%m%d")
+    filename_dated = f'{current_date}_{filename}'
+    
+    output_file_path = os.path.join(plot_folder, filename)
+    output_file_path_dated = os.path.join(plot_folder, current_date, filename_dated)
+    # if output_file_path_dated doesn't exist, create the folder
+    if not os.path.exists(os.path.dirname(output_file_path_dated)):
+        os.makedirs(os.path.dirname(output_file_path_dated))
+
+    df.to_csv(output_file_path, index=False)
+    df.to_csv(output_file_path_dated, index=False)
