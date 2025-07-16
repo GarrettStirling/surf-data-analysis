@@ -9,6 +9,7 @@ As of July 2025, there over 1500 surf sessions recorded.
 - [ ] Add in spot analysis; for certain sessions that were labeled 'good' (wave quality > 9), what NOAA conditions were present?
 - [ ] Add in regional analysis; timeline of regions surfed per month over all years and difference in surf time per region
 - [ ] Add in wetsuit analysis; how long does a wetsuit last?
+- [ ] Rebuild geospatial analysis - add dots around the globe and then focus on spots in california 
 
 # Updates
 - 2025-07-16: Added surfboard analysis (see plots in visuals/ folder)
