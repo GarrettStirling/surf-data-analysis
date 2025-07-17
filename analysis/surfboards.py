@@ -109,7 +109,7 @@ def process_surfboard_lifetime(surf_data_df, surf_data_dict):
     # days between start and end of each task
     board_timeline_df['days_start_to_end'] = board_timeline_df.end_num - board_timeline_df.start_num
 
-    # map the sub_region to the region
+    # map the colors to the df
     board_timeline_df['color'] = board_timeline_df['gone'].map(board_state_color_dict)
 
     return board_timeline_df

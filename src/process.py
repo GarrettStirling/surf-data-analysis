@@ -4,6 +4,22 @@ import time
 
 from src.utils import to_snake_case, convert_numeric_columns, calc_avg_wave_height, check_row_counts, new_col_from_dict
 
+
+# add regions (level above the regions defined in the sheet)
+def add_regions(df):
+    """
+    Add regions to the DataFrame based on subregion.
+    """
+
+    # read in the region_general_dictionary .csv file in the input folder
+    region_map = pd.read_csv('input/region_map.csv', index_col='subregion').to_dict()['region']
+
+    # map the subregion to the region
+    df['region'] = df['subregion'].map(region_map).fillna('Other')
+
+    return df
+
+# Main function to process the surf data DataFrame
 def process_surf_data(df,
                       rm_cols = ['Visuals', 'Notes', 'BUOY Data'],
                       rm_incomplete_yrs = True):
@@ -32,8 +48,8 @@ def process_surf_data(df,
 
     # Sort by date and rename columns
     df = (df
-        .sort_values(by='date', ignore_index=True)
-        .rename(columns={'region': 'sub_region'}))
+          .sort_values(by='date', ignore_index=True)
+          .rename(columns={'region': 'subregion'}))
     
     # Calculate Average Wave Height
     df = calc_avg_wave_height(df)
@@ -45,25 +61,17 @@ def process_surf_data(df,
     #  - 2017 because it starts with Feb
     #  - the current year because only partly through
     if rm_incomplete_yrs:
-        # current_year = datetime.now().year
         df = df.query("year != 2017 and year != @current_year")
 
-    # Add regions
+    # Add regions (a level up from the region in the sheet)
+    # e.g. Spot = 'Seaside', Subregion = 'San Diego', Region = 'Southern California'
     df = add_regions(df)
 
+    # add a column which is the region + spot name
+    df['subregion_spot'] = df['subregion'] + ' - ' + df['spot']
+
+    # add new parameter which is the "session value" which is the sum of wave quality, surf quality and barrel count
+    df['session_value'] = (df[['wave_quality', 'surfing_quality', 'barrels_made']].sum(axis=1, skipna=True))
+    
     return df
 
-
-# add regions (level above the regions in the sheet)
-def add_regions(df):
-    """
-    Add regions to the DataFrame based on sub_region.
-    """
-
-    # read in the region_general_dictionary .csv file in the input folder
-    region_map = pd.read_csv('input/region_map.csv', index_col='sub_region').to_dict()['region']
-
-    # map the sub_region to the region
-    df['region'] = df['sub_region'].map(region_map).fillna('Other')
-
-    return df
