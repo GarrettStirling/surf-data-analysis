@@ -83,7 +83,6 @@ def plot_surfboard_hrs(surfboard_hrs_df,
 
 
 
-
 def process_surfboard_lifetime(surf_data_df, surf_data_dict):
     # Step 1: Find the min and max date for each board
     #         also remove boards that were only surfed once (i.e. start to end date are the same)

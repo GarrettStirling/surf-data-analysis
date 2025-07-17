@@ -62,15 +62,17 @@ def main(check_data = False):
     # ANALYSES -------------------------------------------------
     
     # INITIALIZE THINGS ----
+    # import functions for analysis
     from analysis.summarise import (create_simple_summary, 
                                     create_ranked_summary)
     from analysis.surfboards import (process_surfboard_hrs, 
                                      plot_surfboard_hrs,
                                      process_surfboard_lifetime,
                                      plot_surfboard_lifetime)
+    from analysis.surfing_wrapped import create_surf_wrapped_json
+    
     # Specify the plot folder
-    plot_folder = os.path.join(os.path.dirname(__file__), 'visuals')
-
+    plot_folder = os.path.join(os.path.dirname(__file__), 'output', 'visuals')
 
     # SUMMARISE DATA ----
     
@@ -92,7 +94,9 @@ def main(check_data = False):
         for key, value in ranked_summary_by_year.items():
             print(f"{key}:\n{value}\n")
 
+
     # ALL DATA ANALYSIS ----
+    # TODO: ADD
     # Plots (vertical bar charts)
     # 1. Total hours per year/month
     # 2. Total sessions per year/month
@@ -101,61 +105,11 @@ def main(check_data = False):
 
 
     # SURF DATA WRAPPED ----
-    # in one JSON file per year, with the following data:
-    # - year
-    # - total number of sessions
-    # - total number of hours
-    # - total number of barrels
-    # - total number of unique spots surfed 
-    # - Single day with most hours in the water
-    # - Top 5 surf spots, by most amount of hours. With this data; spot name, region, total hours, number of sessions
-    # - Top 5 Surf sessions, by rank (parameter which includes wave quality, surf quality and barrel count). With this data; date, region, spot, wave quality, surf quality, barrel count
+    # create and save (as JSON) the data needed for the surfing-wrapped animation project
 
-    import json
-
-    def create_surf_wrapped_json(surf_data_df, summary_by_year, ranked_summary_by_year):
-
-        years = surf_data_df['year'].unique()
-
-        top_spots_by_time_by_year = ranked_summary_by_year['top_spots_by_time']
-        top_sessions_by_year = ranked_summary_by_year['top_sessions_by_rank']
-
-        for year in years:
-            surf_data_single_year = surf_data_df[surf_data_df['year'] == year]
-            summary = summary_by_year[summary_by_year['year'] == year]
-            top_spots_by_time = top_spots_by_time_by_year[top_spots_by_time_by_year['year'] == year]
-            top_sessions = top_sessions_by_year[top_sessions_by_year['year'] == year]
-
-            # For the top 5 spots, add in the total number of sessions
-            # 1. inner join surf_data_single_year and top_spots_by_time on spot
-            top_spots_n_sessions = top_spots_by_time.merge(surf_data_single_year, on=['subregion', 'spot'], how='inner')
-            # 2. group by subregion, spot and count the number of sessions
-            top_spots_n_sessions = (top_spots_n_sessions
-                                    .groupby(['subregion', 'spot'], as_index = False)
-                                    .agg(total_sessions=('spot', 'count')))
-            # 3. merge the total_sessions into the top_spots_by_time
-            top_spots_by_time = top_spots_by_time.merge(top_spots_n_sessions, on=['subregion', 'spot'], how='left')
-
-            # TODO: for the top 5 sessions, add in the date, region, spot, wave quality, surf quality and barrel count
-
-            print("PAUSE HERE")
-            # Create a dictionary to hold the wrapped data
-            wrapped_data = {
-                'year': year,
-                'total_sessions': summary['total_sessions'].values[0],
-                'total_hours': summary['total_hours'].values[0],
-                'total_barrels': summary['total_barrels_made'].values[0],
-                'total_unique_spots': summary['total_unique_spots'].values[0],
-                #'top_spots': ranked_yr.head(5).to_dict(orient='records'),
-                #'top_sessions': ranked_yr.head(5).to_dict(orient='records')
-            }
-
-            # Save the wrapped data as a JSON file
-            with open(f'wrapped_data_{year}.json', 'w') as f:
-                json.dump(wrapped_data, f, indent=4)
-
-    create_surf_wrapped_json(surf_data_df, summary_by_year, ranked_summary_by_year)
-
+    # Create the JSON output folder
+    json_output_folder = os.path.join(os.path.dirname(__file__), 'output', 'surfing_wrapped')
+    create_surf_wrapped_json(surf_data_df, summary_by_year, ranked_summary_by_year, json_output_folder)
 
     # SURFBOARD ANALYSIS ----
 
@@ -171,13 +125,18 @@ def main(check_data = False):
     # new analysis; surfboard length over time
     # TODO: maybe average length per month - weighted by hours used?
 
-    # REGION ANALYSIS ----
-    # TODO: ADD IN
 
+    # REGION ANALYSIS ----
+    # TODO: ADD
+
+
+    # WETSUIT ANALYSIS ----
+    # TODO: ADD
     
+
     # SPOT ANALYSIS ----
     # Link historic NOAA data to surf-data and determine the conditions that lead to a spot being 'good' (i.e. wave quality of 8 or higher)
-    # TODO: Add spot analysis here
+    # TODO: ADD
 
 if __name__ == "__main__":
     main(check_data=False)
