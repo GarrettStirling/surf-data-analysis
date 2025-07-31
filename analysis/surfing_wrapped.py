@@ -1,7 +1,7 @@
-# this is a Python script to export a JSON file for the surfing-wrapped animation project
-
 import json
 import os
+
+from src.utils import NpEncoder
 
 def create_surf_wrapped_json(surf_data_df, 
                              summary_by_year, 
@@ -46,12 +46,20 @@ def create_surf_wrapped_json(surf_data_df,
                                 .groupby(['subregion', 'spot'], as_index = False)
                                 .agg(total_sessions=('spot', 'count')))
         # 3. merge the total_sessions into the top_spots_by_time
-        top_spots_by_time = top_spots_by_time.merge(top_spots_n_sessions, on=['subregion', 'spot'], how='left')
+        top_spots_by_time = (top_spots_by_time.merge(top_spots_n_sessions, 
+                                                    on=['subregion', 'spot'], 
+                                                    how='left'))
 
-        # TODO: for the top 5 sessions, add in the date, region, spot, wave quality, surf quality and barrel count
+        # For the top 5 sessions, add in the region, wave quality, surf quality and barrel count
+        top_sessions_merge = top_sessions.merge(surf_data_single_year[['date', 'spot', 'region', 'wave_quality', 'surfing_quality', 'barrels_made']], 
+                                                on=['date', 'spot'], 
+                                                how='left')
 
-        # TODO: "biggest_day" add in the single day with most hours in the water
-
+        # "biggest_day" add in the single day with most hours in the water
+        hours_per_day = surf_data_single_year.groupby('date')['hrs'].sum().reset_index()
+        hours_per_day.columns = ['date', 'total_hours']
+        biggest_day = hours_per_day.loc[hours_per_day['total_hours'].idxmax()]
+        
         # Create a dictionary to hold the wrapped data
         wrapped_data = {
             'year': year,
@@ -59,9 +67,9 @@ def create_surf_wrapped_json(surf_data_df,
             'total_hours': summary['total_hours'].values[0],
             'total_barrels': summary['total_barrels_made'].values[0],
             'total_unique_spots': summary['total_unique_spots'].values[0],
-            #'biggest_day': biggest_day,  # TODO: ADD SOME PROCESSING HERE
-            #'top_spots': top_spots_by_time,  # TODO: ADD SOME PROCESSING HERE
-            #'top_sessions': top_sessions  # TODO: ADD SOME PROCESSING HERE
+            'biggest_day': biggest_day.to_dict(),
+            'top_spots': top_spots_by_time.to_dict(orient='records'), 
+            'top_sessions': top_sessions_merge.to_dict(orient='records')
         }
 
         # Save the wrapped data as a JSON file
@@ -69,4 +77,4 @@ def create_surf_wrapped_json(surf_data_df,
         output_file_path = os.path.join(json_output_folder, file_name)
 
         with open(output_file_path, 'w') as f:
-            json.dump(wrapped_data, f, indent=4)
+            json.dump(wrapped_data, f, indent=4, cls=NpEncoder)

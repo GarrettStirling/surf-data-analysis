@@ -1,9 +1,12 @@
 import re
 import pandas as pd
+import numpy as np
 import statistics
 import matplotlib.pyplot as plt
 from datetime import datetime
 import os
+import json
+
 
 # function to assert that two dataframes have the same number of rows
 def check_row_counts(df1, df2):
@@ -113,3 +116,20 @@ def save_csv_dated(plot_folder, filename, df):
 
     df.to_csv(output_file_path, index=False)
     df.to_csv(output_file_path_dated, index=False)
+
+
+class NpEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.integer):
+            return int(obj)
+        if isinstance(obj, np.floating):
+            return float(obj)
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        if isinstance(obj, pd.Timestamp):
+            return obj.isoformat()
+        if isinstance(obj, np.datetime64):
+            return pd.Timestamp(obj).isoformat()
+        if pd.isna(obj):  # Handle NaN, NaT, None
+            return None
+        return super(NpEncoder, self).default(obj)

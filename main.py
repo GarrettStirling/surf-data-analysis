@@ -80,7 +80,7 @@ def main(check_data = False):
     summary_by_year = create_simple_summary(surf_data_df, group_cols=['year'])
     summary_by_year_month = create_simple_summary(surf_data_df, group_cols=['year', 'month'])
 
-    # Ranked Summaries
+    # Ranked Summaries (dictionary objects)
     ranked_summary = create_ranked_summary(surf_data_df, by_year=False)
     ranked_summary_by_year = create_ranked_summary(surf_data_df)
     
@@ -93,7 +93,6 @@ def main(check_data = False):
         print("\nRanked Summary by Year:")
         for key, value in ranked_summary_by_year.items():
             print(f"{key}:\n{value}\n")
-
 
     # ALL DATA ANALYSIS ----
     # TODO: ADD
@@ -137,6 +136,9 @@ def main(check_data = False):
     # SPOT ANALYSIS ----
     # Link historic NOAA data to surf-data and determine the conditions that lead to a spot being 'good' (i.e. wave quality of 8 or higher)
     # TODO: ADD
+
+    #TEMP
+    print("BREAKPOINT")
 
 if __name__ == "__main__":
     main(check_data=False)

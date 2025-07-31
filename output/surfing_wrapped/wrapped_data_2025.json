@@ -1,0 +1,116 @@
+{
+    "year": 2025,
+    "total_sessions": 74,
+    "total_hours": 105.7,
+    "total_barrels": 53.0,
+    "total_unique_spots": 36,
+    "biggest_day": {
+        "date": "2025-06-06T00:00:00",
+        "total_hours": 5.5
+    },
+    "top_spots": [
+        {
+            "year": 2025,
+            "subregion": "Nicaragua",
+            "spot": "The Boom",
+            "total_hours": 12.0,
+            "total_sessions": 6
+        },
+        {
+            "year": 2025,
+            "subregion": "El Salvador",
+            "spot": "Punta Mango",
+            "total_hours": 11.5,
+            "total_sessions": 7
+        },
+        {
+            "year": 2025,
+            "subregion": "Santa Cruz",
+            "spot": "Waddell Reef",
+            "total_hours": 11.5,
+            "total_sessions": 8
+        },
+        {
+            "year": 2025,
+            "subregion": "Nicaragua",
+            "spot": "Chococente",
+            "total_hours": 9.75,
+            "total_sessions": 4
+        },
+        {
+            "year": 2025,
+            "subregion": "Portugal",
+            "spot": "Pedra Branca",
+            "total_hours": 5.75,
+            "total_sessions": 4
+        }
+    ],
+    "top_sessions": [
+        {
+            "year": 2025,
+            "date": "2025-06-03T00:00:00",
+            "subregion": "Nicaragua",
+            "spot": "Mechapa",
+            "session_value": 23.0,
+            "region": "Other",
+            "wave_quality": 8.0,
+            "surfing_quality": 10.0,
+            "barrels_made": 5.0
+        },
+        {
+            "year": 2025,
+            "date": "2025-03-04T00:00:00",
+            "subregion": "Portugal",
+            "spot": "Nazare",
+            "session_value": 22.0,
+            "region": "Other",
+            "wave_quality": 10.0,
+            "surfing_quality": 8.0,
+            "barrels_made": 4.0
+        },
+        {
+            "year": 2025,
+            "date": "2025-01-05T00:00:00",
+            "subregion": "Santa Cruz",
+            "spot": "Waddell Reef",
+            "session_value": 21.5,
+            "region": "Central CA",
+            "wave_quality": 8.5,
+            "surfing_quality": 9.0,
+            "barrels_made": 4.0
+        },
+        {
+            "year": 2025,
+            "date": "2025-03-02T00:00:00",
+            "subregion": "Portugal",
+            "spot": "Pedra Branca",
+            "session_value": 21.25,
+            "region": "Other",
+            "wave_quality": 8.0,
+            "surfing_quality": 8.0,
+            "barrels_made": 1.0
+        },
+        {
+            "year": 2025,
+            "date": "2025-03-02T00:00:00",
+            "subregion": "Portugal",
+            "spot": "Pedra Branca",
+            "session_value": 21.25,
+            "region": "Other",
+            "wave_quality": 10.0,
+            "surfing_quality": 9.5,
+            "barrels_made": 6.0
+        },
+        {
+            "year": 2025,
+            "date": "2025-05-23T00:00:00",
+            "subregion": "Nicaragua",
+            "spot": "Chococente",
+            "session_value": 21.0,
+            "region": "Other",
+            "wave_quality": 8.0,
+            "surfing_quality": 8.0,
+            "barrels_made": 5.0
+        }
+    ]
+}

@@ -1,8 +1,6 @@
 import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
 import pandas as pd
-from datetime import datetime
-import os
 import numpy as np
 
 from src.plot_setup import bg_color, region_color_dict, board_state_color_dict
@@ -28,7 +26,7 @@ def plot_surfboard_hrs(surfboard_hrs_df,
     """ Plot the amount of hours spent on each surfboard by region."""
 
     # Create the figure and axis
-    fig, ax = plt.subplots(1, figsize=(16,10), facecolor=bg_color)
+    fig, ax = plt.subplots(1, figsize=(16,16), facecolor=bg_color)
     ax.set_facecolor(bg_color)
 
     # Plot stacked horizontal bars
@@ -49,9 +47,9 @@ def plot_surfboard_hrs(surfboard_hrs_df,
                 which = 'both')
 
     # Customize the plot
-    ax.set_xlabel('Hours', color='w', fontweight='bold', fontsize=16)
+    ax.set_xlabel('Hours Spent on Surfboard', color='w', fontweight='bold', fontsize=16, labelpad=25)
     ax.set_ylabel('Surfboards', color='w', fontweight='bold', fontsize=16)
-    plt.suptitle('Amount of Hours Spent on Each Surfboard by Region', color='w', fontweight='bold')
+    plt.suptitle('Amount of Hours Spent on Each Surfboard by Region', color='w', fontweight='bold', fontsize=18)
 
     # Legend
     legend_elements = [Patch(facecolor = region_color_dict[i], label = i)  for i in region_color_dict]
@@ -59,8 +57,7 @@ def plot_surfboard_hrs(surfboard_hrs_df,
                     loc = 'lower center',
                     ncol = len(region_color_dict),
                     frameon = False,
-                    bbox_to_anchor=(0.45, 1.0)
-                    )
+                    bbox_to_anchor=(0.45, 0.975))
     plt.setp(legend.get_texts(), color='w')
 
     # ax.tick_params(axis='x', labelsize=14, colors='w', length=0)  # Adjust labelsize as needed
@@ -121,7 +118,7 @@ def plot_surfboard_lifetime(board_timeline_df,
     # https://gist.github.com/Thiagobc23/fc12c3c69fbb90ac64b594f2c3641fcf
 
     # Setup
-    fig, ax = plt.subplots(1, figsize=(16,8), facecolor=bg_color)
+    fig, ax = plt.subplots(1, figsize=(16, 10), facecolor=bg_color)
     ax.set_facecolor(bg_color)
 
     # Bars
@@ -166,7 +163,7 @@ def plot_surfboard_lifetime(board_timeline_df,
     years_start_index = np.insert(years_start_index, 0, 0)
     # now apply the ticks as the indexes that indicate the start of each year
     ax.set_xticks(years_start_index)
-    ax.set_xticklabels(np.unique(year_per_day_range), color='w')
+    ax.set_xticklabels(np.unique(year_per_day_range), color='w', fontsize =14)
     ax.set_yticks([]) # no y-ticks
     plt.setp([ax.get_xticklines()], color='w')
     plt.tick_params(axis='x', length=0)
@@ -181,10 +178,9 @@ def plot_surfboard_lifetime(board_timeline_df,
     ax.spines['bottom'].set_color('w')
 
     # Title
-    plt.suptitle('Surfboard Lifetime', color='w', fontweight='bold')
-    fig.text(0.5, 0.95, 'each bar represents the first and last time using each surfboard', transform=fig.transFigure, ha='center', va='top', fontsize=10, fontweight='light', color='w')
+    plt.suptitle('Surfboard Lifetime', color='w', fontweight='bold', fontsize=18)
+    fig.text(0.5, 0.95, 'Each bar represents the first and last time using each surfboard', transform=fig.transFigure, ha='center', va='top', fontsize=10, fontweight='light', color='w')
 
-    # plt.show()
     if plot_folder:
         filename = 'surfboard_timeline_df.png'
         save_plt_dated(plot_folder, filename)

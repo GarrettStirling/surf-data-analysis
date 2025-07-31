@@ -91,7 +91,7 @@ def create_ranked_summary(surf_data_df, top_n=5, by_year=True):
         top_n=top_n,
         agg_type='count',
         agg_col='spot',
-        by_year=by_year)
+        by_year=by_year).rename(columns = {'agg': 'session_count'})
     # Top Spots by Time
     ranked_summary_dict['top_spots_by_time'] = top_n_by_agg_type(
         surf_data_df,
@@ -99,7 +99,7 @@ def create_ranked_summary(surf_data_df, top_n=5, by_year=True):
         top_n=top_n,
         agg_type='sum',
         agg_col='hrs',
-        by_year=by_year)
+        by_year=by_year).rename(columns = {'agg': 'total_hours'})
     # Top Spots by Barrels Made
     ranked_summary_dict['top_spots_by_barrels'] = top_n_by_agg_type(
         surf_data_df,
@@ -107,7 +107,7 @@ def create_ranked_summary(surf_data_df, top_n=5, by_year=True):
         top_n=top_n,
         agg_type='sum',
         agg_col='barrels_made',
-        by_year=by_year)
+        by_year=by_year).rename(columns = {'agg': 'total_barrel_count'})
     # Top Boards by Count
     ranked_summary_dict['top_boards_by_count'] = top_n_by_agg_type(
         surf_data_df,
@@ -115,7 +115,7 @@ def create_ranked_summary(surf_data_df, top_n=5, by_year=True):
         top_n=top_n,
         agg_type='count',
         agg_col='board',
-        by_year=by_year)
+        by_year=by_year).rename(columns = {'agg': 'session_count'})
     # Top Boards by Time
     ranked_summary_dict['top_boards_by_time'] = top_n_by_agg_type(
         surf_data_df,
@@ -123,7 +123,7 @@ def create_ranked_summary(surf_data_df, top_n=5, by_year=True):
         top_n=top_n,
         agg_type='sum',
         agg_col='hrs',
-        by_year=by_year)
+        by_year=by_year).rename(columns = {'agg': 'total_hours'})
     # Top Boards by Barrels Made
     ranked_summary_dict['top_boards_by_barrels'] = top_n_by_agg_type(
         surf_data_df,
@@ -131,7 +131,7 @@ def create_ranked_summary(surf_data_df, top_n=5, by_year=True):
         top_n=top_n,
         agg_type='sum',
         agg_col='barrels_made',
-        by_year=by_year)
+        by_year=by_year).rename(columns = {'agg': 'total_barrel_count'})
     # Top 5 Sessions by session_value
     ranked_summary_dict['top_sessions_by_rank'] = top_n_by_agg_type(
         surf_data_df,
@@ -139,6 +139,6 @@ def create_ranked_summary(surf_data_df, top_n=5, by_year=True):
         top_n=top_n,
         agg_type='mean',
         agg_col='session_value',
-        by_year=by_year)
+        by_year=by_year).rename(columns = {'agg': 'session_value'})
 
     return ranked_summary_dict
