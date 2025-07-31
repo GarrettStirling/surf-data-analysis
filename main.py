@@ -6,7 +6,8 @@ from src.setup import load_gsheet, concatenate_entries
 from src.process import process_surf_data
 from src.utils import check_n_distinct
 
-def main(check_data = False):
+def main(check_data=False,
+         save_plots=False):
     """
     Main function to read, process, and visualize my surf data.
     """
@@ -62,19 +63,16 @@ def main(check_data = False):
     # ANALYSES -------------------------------------------------
     
     # INITIALIZE THINGS ----
-    # import functions for analysis
-    from analysis.summarise import (create_simple_summary, 
-                                    create_ranked_summary)
-    from analysis.surfboards import (process_surfboard_hrs, 
-                                     plot_surfboard_hrs,
-                                     process_surfboard_lifetime,
-                                     plot_surfboard_lifetime)
-    from analysis.surfing_wrapped import create_surf_wrapped_json
-    
-    # Specify the plot folder
-    plot_folder = os.path.join(os.path.dirname(__file__), 'output', 'visuals')
+   
+    if save_plots:
+        # Specify the plot folder
+        plot_folder = os.path.join(os.path.dirname(__file__), 'output', 'visuals')
+    else:
+        save_plots = None
 
     # SUMMARISE DATA ----
+    from analysis.summarise import (create_simple_summary, 
+                                    create_ranked_summary)
     
     # Basic, single values per year and per year+month
     summary_by_year = create_simple_summary(surf_data_df, group_cols=['year'])
@@ -105,28 +103,46 @@ def main(check_data = False):
 
     # SURF DATA WRAPPED ----
     # create and save (as JSON) the data needed for the surfing-wrapped animation project
-
-    # Create the JSON output folder
-    json_output_folder = os.path.join(os.path.dirname(__file__), 'output', 'surfing_wrapped')
-    create_surf_wrapped_json(surf_data_df, summary_by_year, ranked_summary_by_year, json_output_folder)
+    surf_wrapped = False
+    if surf_wrapped:
+        from analysis.surfing_wrapped import create_surf_wrapped_json
+        # Create the JSON output folder
+        json_output_folder = os.path.join(os.path.dirname(__file__), 'output', 'surfing_wrapped')
+        create_surf_wrapped_json(surf_data_df, summary_by_year, ranked_summary_by_year, json_output_folder)
 
     # SURFBOARD ANALYSIS ----
-
-    # Process and plot the amount of hours with each surfboard by region
-    surfboard_hrs_df = process_surfboard_hrs(surf_data_df, surf_data_dict)
-    plot_surfboard_hrs(surfboard_hrs_df,
-                       plot_folder=plot_folder)
-
-    # process and plot a gantt-timeline with each surfboard
-    surfboard_min_max_df = process_surfboard_lifetime(surf_data_df, surf_data_dict)
-    plot_surfboard_lifetime(surfboard_min_max_df,
-                            plot_folder=plot_folder)
-    # new analysis; surfboard length over time
-    # TODO: maybe average length per month - weighted by hours used?
+    surfboard_analysis = False
+    if surfboard_analysis:
+        from analysis.surfboards import (process_surfboard_hrs, 
+                                        plot_surfboard_hrs,
+                                        process_surfboard_lifetime,
+                                        plot_surfboard_lifetime)
+        # Process and plot the amount of hours with each surfboard by region
+        surfboard_hrs_df = process_surfboard_hrs(surf_data_df, surf_data_dict)
+        plot_surfboard_hrs(surfboard_hrs_df,
+                           plot_folder=plot_folder)
+        # process and plot a gantt-timeline with each surfboard
+        surfboard_min_max_df = process_surfboard_lifetime(surf_data_df, surf_data_dict)
+        plot_surfboard_lifetime(surfboard_min_max_df,
+                                plot_folder=plot_folder)
+        # new analysis; surfboard length over time
+        # TODO: maybe average length per month - weighted by hours used?
 
 
     # REGION ANALYSIS ----
-    # TODO: ADD
+    from analysis.regions import (process_region_hours, 
+                                  plot_regions_across_time,
+                                  process_time_of_day,
+                                  plot_time_of_day)
+
+    # plot the hours per region across time, binned by month
+    region_hours_df = process_region_hours(surf_data_df)
+    plot_regions_across_time(region_hours_df,
+                             plot_folder=plot_folder)
+    # plot the time of day surfed, separated by region
+    time_of_day_df = process_time_of_day(surf_data_df)
+    plot_time_of_day(time_of_day_df,
+                     plot_folder=plot_folder)
 
 
     # WETSUIT ANALYSIS ----
@@ -141,4 +157,5 @@ def main(check_data = False):
     print("BREAKPOINT")
 
 if __name__ == "__main__":
-    main(check_data=False)
+    main(check_data=False,
+         save_plots=True)
