@@ -20,6 +20,10 @@ def create_simple_summary(df, group_cols):
              most_freq_board=('board', lambda x: x.value_counts().index[0] if not x.isna().all() else None),
              most_freq_wetsuit=('wetty', lambda x: x.value_counts().index[0] if not x.isna().all() else None))
         .reset_index())
+    
+    # Add in the 'year-month' column if we are grouping over both
+    if 'year' in group_cols and 'month' in group_cols:
+        annual_summary['year_month'] = (annual_summary['year'].astype(str) + '-' + annual_summary['month'].apply(lambda x: f'{int(x):02d}'))
 
     return annual_summary
 

@@ -58,7 +58,7 @@ def process_region_hours(surf_data_df):
     return region_hours_full
 
 def plot_regions_across_time(plot_df,
-                            plot_folder=None):
+                             plot_folder=None):
     
 
     # find the total amount of hours per year/month and divide by 2 (we are going to use this value for both side of the line)
@@ -166,7 +166,6 @@ def plot_time_of_day(time_of_day_df,
     legend_elements = [Patch(facecolor = time_of_day_color_dict[i], label = i)  for i in time_of_day_color_dict]
     legend = ax.legend(handles = legend_elements,
                     loc = 'lower center',
-                    #  loc = 'upper left',
                     ncol = len(time_of_day_color_dict),
                     frameon = False,
                     bbox_to_anchor=(0.5, 1))

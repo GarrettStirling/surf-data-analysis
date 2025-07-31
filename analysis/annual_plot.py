@@ -1,0 +1,104 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+
+from src.plot_setup import bg_color, main_palette
+from src.utils import save_plt_dated
+
+def plot_annual_summaries(summary_df,
+                          plot_folder=None):
+    
+    if 'year_month' in summary_df.columns:
+        # Convert year_month to datetime for proper sorting and display
+        summary_df['year_month'] = pd.to_datetime(summary_df['year_month'], format='%Y-%m')
+        summary_df = summary_df.sort_values('year_month')
+        
+        # Generate title and filename
+        plot_title = 'Surf Stats by Year and Month'
+        filename = 'surf_stats_bar_charts_by_month_year.png'
+    else:
+        # Ensure year is in a suitable format for plotting
+        summary_df['year'] = pd.to_numeric(summary_df['year'], errors='coerce')
+        summary_df = summary_df.dropna(subset=['year'])
+        summary_df = summary_df.sort_values('year')
+        
+        # Generate title and filename
+        plot_title = 'Surf Stats by Year'
+        filename = 'surf_stats_bar_charts_by_year.png'
+
+    # Create the figure with 4 subplots stacked vertically
+    fig, axes = plt.subplots(4, 1, figsize=(16, 14), sharex=True)
+    fig.patch.set_facecolor(bg_color)
+    
+    # Define metrics for each subplot
+    metrics = [
+        ('total_hours', 'Total Hours', 'Hours'),
+        ('total_sessions', 'Total Sessions', 'Sessions'),
+        ('total_unique_spots', 'Total Unique Spots Surfed', 'Spots'),
+        ('total_barrels_made', 'Amount of Barrels Made', 'Barrels')
+    ]
+    
+    # Create bars for each subplot
+    for i, (metric, title, ylabel) in enumerate(metrics):
+        ax = axes[i]
+        
+        # Add faint colored grid lines FIRST (behind bars)
+        ax.grid(True, alpha=0.2, linestyle='-', linewidth=0.5, color='white')
+        ax.set_axisbelow(True)  # Ensure grid is behind bars
+        
+        # Create bars with specified width and no stroke
+        if 'year_month' in summary_df.columns:
+            bars = ax.bar(summary_df['year_month'],
+                          summary_df[metric],
+                          color=main_palette[i],
+                          width=20)
+        else:
+            bars = ax.bar(summary_df['year'],
+                          summary_df[metric],
+                          color=main_palette[i],
+                          width=0.8)
+        
+        # Customize each subplot with left-aligned title
+        ax.set_title(title, fontsize=16, fontweight='bold', color='white', pad=15, loc='left')
+        ax.set_ylabel(ylabel, fontsize=16, color='white')
+        ax.set_facecolor(bg_color)
+        
+        # Remove spines (bounding box) except bottom (white line for all subplots)
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        ax.spines['left'].set_visible(False)
+        # Make bottom spine white for all subplots
+        ax.spines['bottom'].set_color('white')
+        ax.spines['bottom'].set_linewidth(1)
+        
+        # Customize tick colors and remove tick marks
+        ax.tick_params(colors='white', labelsize=10, length=0)
+    
+    # Remove tick marks and adjust x-axis labels for better readability
+    axes[-1].tick_params(length=0)
+    
+    # Format x-axis based on data type with bold labels, size 14, and padding
+    if 'year_month' in summary_df.columns:
+        axes[-1].xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+        axes[-1].xaxis.set_major_locator(mdates.YearLocator())
+        labels = axes[-1].get_xticklabels()
+        [label.set_fontweight('bold') for label in labels]
+        
+    else:
+        axes[-1].set_xticks(summary_df['year'])
+        axes[-1].set_xticklabels(summary_df['year'].astype(int), fontweight='bold')
+    
+    axes[-1].tick_params(axis='x', labelsize=14, pad=10)
+
+    # Adjust layout to prevent overlap
+    plt.tight_layout()
+    
+    # Add a main title with more space above top subplot
+    fig.suptitle(plot_title, fontsize=18, fontweight='bold', color='white', y=0.975)
+    
+    # Adjust the top margin to accommodate the main title with more space
+    plt.subplots_adjust(top=0.92, bottom=0.12, hspace=0.3)
+    
+    # Save
+    if plot_folder:
+        save_plt_dated(plot_folder, filename)

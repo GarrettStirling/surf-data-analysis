@@ -93,13 +93,9 @@ def main(check_data=False,
             print(f"{key}:\n{value}\n")
 
     # ALL DATA ANALYSIS ----
-    # TODO: ADD
-    # Plots (vertical bar charts)
-    # 1. Total hours per year/month
-    # 2. Total sessions per year/month
-    # 3. Total unique spots per year/month
-    # 5. Total barrels made per year/month (stacked bar by region)
-
+    from analysis.annual_plot import plot_annual_summaries
+    plot_annual_summaries(summary_by_year_month, plot_folder=plot_folder)
+    plot_annual_summaries(summary_by_year, plot_folder=plot_folder)
 
     # SURF DATA WRAPPED ----
     # create and save (as JSON) the data needed for the surfing-wrapped animation project
@@ -114,9 +110,9 @@ def main(check_data=False,
     surfboard_analysis = False
     if surfboard_analysis:
         from analysis.surfboards import (process_surfboard_hrs, 
-                                        plot_surfboard_hrs,
-                                        process_surfboard_lifetime,
-                                        plot_surfboard_lifetime)
+                                         plot_surfboard_hrs,
+                                         process_surfboard_lifetime,
+                                         plot_surfboard_lifetime)
         # Process and plot the amount of hours with each surfboard by region
         surfboard_hrs_df = process_surfboard_hrs(surf_data_df, surf_data_dict)
         plot_surfboard_hrs(surfboard_hrs_df,
