@@ -77,6 +77,7 @@ def plot_surfboard_hrs(surfboard_hrs_df,
     if plot_folder:
         filename = 'surfboard_hours_by_region.png'
         save_plt_dated(plot_folder, filename)
+        print(f"Plot saved as {filename} in {plot_folder}")
 
 
 
@@ -184,3 +185,4 @@ def plot_surfboard_lifetime(board_timeline_df,
     if plot_folder:
         filename = 'surfboard_timeline_df.png'
         save_plt_dated(plot_folder, filename)
+        print(f"Plot saved as {filename} in {plot_folder}")

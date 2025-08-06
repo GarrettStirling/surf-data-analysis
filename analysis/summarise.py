@@ -112,6 +112,9 @@ def create_ranked_summary(surf_data_df, top_n=5, by_year=True):
         agg_type='sum',
         agg_col='barrels_made',
         by_year=by_year).rename(columns = {'agg': 'total_barrel_count'})
+    # remove zeros (I did not record barrels before 2021)
+    ranked_summary_dict['top_spots_by_barrels'] = ranked_summary_dict['top_spots_by_barrels'].query('total_barrel_count > 0')
+
     # Top Boards by Count
     ranked_summary_dict['top_boards_by_count'] = top_n_by_agg_type(
         surf_data_df,

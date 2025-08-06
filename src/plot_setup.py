@@ -12,13 +12,18 @@ region_color_dict = {'Southern CA': '#89D99D',
 
 # build dictionary to assign colors based on the the board state.
 # note, this order matters for the order of the legend!!
-board_state_color_dict = {'have':'#5db054', # green
-                          'gave away':'#e5ed87', # yellow
-                          'sold':'#f59e42', # 
+board_state_color_dict = {'have':'#5db054',
+                          'gave away':'#e5ed87',
+                          'sold':'#f59e42',
                           'broken':'#b05454'}
 
 # apply color for `when`
 time_of_day_color_dict = {'morning': '#89D99D',
-                    'midday':  '#3B8C6E',
-                    'evening': '#10ABB4',
-                    'night':   '#1E5959'}
+                          'midday':  '#3B8C6E',
+                          'evening': '#10ABB4',
+                          'night':   '#1E5959'}
+# apply color for `when`
+season_color_dict = {'Winter': '#10ABB4',
+                     'Spring':  '#5db054',
+                     'Summer': '#e5ed87',
+                     'Fall':   '#f59e42'}

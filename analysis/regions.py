@@ -106,13 +106,16 @@ def plot_regions_across_time(plot_df,
     ax.xaxis.grid(color='lightgrey', linestyle='dashed', alpha=.5, lw=0.5)
 
     # Title
-    plt.suptitle('Hours Spent Surfing in Each Region (Relative)', color='w', fontweight='bold', fontsize=18)
+    plt.title('Hours Spent Surfing in Each Region', color='w', fontsize=16, fontweight='bold')
+    # sub title
+    plt.suptitle('Hours summed per month', color='w', fontsize=14)
 
     plt.tight_layout()
 
     if plot_folder:
         filename = 'region_hours_across_time.png'
         save_plt_dated(plot_folder, filename)
+        print(f"Plot saved as {filename} in {plot_folder}")
 
 def process_time_of_day(surf_data_df):
     time_of_day_df = surf_data_df.copy().dropna(subset=['when'])
@@ -188,3 +191,4 @@ def plot_time_of_day(time_of_day_df,
     if plot_folder:
         filename = 'time_of_day_by_region.png'
         save_plt_dated(plot_folder, filename)
+        print(f"Plot saved as {filename} in {plot_folder}")

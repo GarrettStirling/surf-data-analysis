@@ -1,8 +1,7 @@
 from tracemalloc import start
 import pandas as pd
-import time
 
-from src.utils import to_snake_case, convert_numeric_columns, calc_avg_wave_height, check_row_counts, new_col_from_dict
+from src.utils import to_snake_case, convert_numeric_columns, calc_avg_wave_height, check_row_counts, assign_season
 
 
 # add regions (level above the regions defined in the sheet)
@@ -72,6 +71,9 @@ def process_surf_data(df,
 
     # add new parameter which is the "session value" which is the sum of wave quality, surf quality and barrel count
     df['session_value'] = (df[['wave_quality', 'surfing_quality', 'barrels_made']].sum(axis=1, skipna=True))
+
+    # add in the seasons
+    df['season'] = df['month'].apply(assign_season)
     
     return df
 
