@@ -1,0 +1,105 @@
+{
+    "year": 2023,
+    "total_sessions": 216,
+    "total_hours": 243.75,
+    "total_barrels": 63.0,
+    "total_unique_spots": 67,
+    "biggest_day": {
+        "date": "2023-10-14T00:00:00",
+        "total_hours": 6.5
+    },
+    "top_spots": [
+        {
+            "year": 2023,
+            "subregion": "Oahu",
+            "spot": "Rocky Point",
+            "total_hours": 26.0,
+            "total_sessions": 24
+        },
+        {
+            "year": 2023,
+            "subregion": "Santa Cruz",
+            "spot": "Waddell Reef",
+            "total_hours": 16.5,
+            "total_sessions": 11
+        },
+        {
+            "year": 2023,
+            "subregion": "Oahu",
+            "spot": "Log Cabins",
+            "total_hours": 16.25,
+            "total_sessions": 14
+        },
+        {
+            "year": 2023,
+            "subregion": "Oahu",
+            "spot": "Gas Chambers",
+            "total_hours": 15.25,
+            "total_sessions": 14
+        },
+        {
+            "year": 2023,
+            "subregion": "San Francisco",
+            "spot": "Ocean Beach",
+            "total_hours": 10.25,
+            "total_sessions": 7
+        }
+    ],
+    "top_sessions": [
+        {
+            "year": 2023,
+            "date": "2023-01-28T00:00:00",
+            "subregion": "Ventura",
+            "spot": "Ventura Rivermouth",
+            "session_value": 25.0,
+            "region": "Southern CA",
+            "wave_quality": 9.0,
+            "surfing_quality": 10.0,
+            "barrels_made": 6.0
+        },
+        {
+            "year": 2023,
+            "date": "2023-01-11T00:00:00",
+            "subregion": "Ventura",
+            "spot": "Silver Strand",
+            "session_value": 20.0,
+            "region": "Southern CA",
+            "wave_quality": 10.0,
+            "surfing_quality": 8.0,
+            "barrels_made": 2.0
+        },
+        {
+            "year": 2023,
+            "date": "2023-03-04T00:00:00",
+            "subregion": "Oahu",
+            "spot": "Rockpile",
+            "session_value": 20.0,
+            "region": "Hawaii",
+            "wave_quality": 8.0,
+            "surfing_quality": 8.0,
+            "barrels_made": 4.0
+        },
+        {
+            "year": 2023,
+            "date": "2023-03-21T00:00:00",
+            "subregion": "Oahu",
+            "spot": "Log Cabins",
+            "session_value": 19.0,
+            "region": "Hawaii",
+            "wave_quality": 10.0,
+            "surfing_quality": 8.0,
+            "barrels_made": 1.0
+        },
+        {
+            "year": 2023,
+            "date": "2023-03-24T00:00:00",
+            "subregion": "Oahu",
+            "spot": "Rocky Point",
+            "session_value": 19.0,
+            "region": "Hawaii",
+            "wave_quality": 10.0,
+            "surfing_quality": 7.0,
+            "barrels_made": 2.0
+        }
+    ]
+}

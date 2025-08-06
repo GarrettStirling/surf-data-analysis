@@ -75,6 +75,11 @@ def create_surf_wrapped_json(surf_data_df,
         # Save the wrapped data as a JSON file
         file_name = f'wrapped_data_{year}.json'
         output_file_path = os.path.join(json_output_folder, file_name)
+        # create the output folder if it doesn't exist
+        if not os.path.exists(json_output_folder):
+            print(f"Creating output folder: {json_output_folder}")
+            os.makedirs(json_output_folder, exist_ok=True)
 
         with open(output_file_path, 'w') as f:
             json.dump(wrapped_data, f, indent=4, cls=NpEncoder)
+            print(f"Created JSON file: {output_file_path}")

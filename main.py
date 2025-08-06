@@ -9,7 +9,7 @@ from src.utils import check_n_distinct
 def main(check_data=False,
          save_plots=False,
          surf_wrapped=True,
-         print_summaries=True,
+         print_summaries=False,
          surfboard_analysis=True):
     """
     Main function to read, process, and visualize my surf data.
@@ -63,19 +63,18 @@ def main(check_data=False,
             check_n_distinct(surf_data_df, 'subregion')
 
 
-    # ANALYSES -------------------------------------------------
+    # ANALYSIS -------------------------------------------------
     
-    # INITIALIZE THINGS ----
-   
+    # (1) INITIALIZE THINGS ----
+    # Specify the plot folder, if save_plots is True
     if save_plots:
-        # Specify the plot folder
         plot_folder = os.path.join(os.path.dirname(__file__), 'output', 'visuals')
     else:
-        save_plots = None
+        plot_folder = None
 
-    # SUMMARISE DATA ----
-    from analysis.summarise import (create_simple_summary, 
-                                    create_ranked_summary)
+
+    # (2) SUMMARISE DATA ----
+    from analysis.summarise import create_simple_summary, create_ranked_summary
     
     # Basic, single values per year and per year+month
     summary_by_year = create_simple_summary(surf_data_df, group_cols=['year'])
@@ -86,7 +85,6 @@ def main(check_data=False,
     ranked_summary_by_year = create_ranked_summary(surf_data_df)
     
     # view the dictionary of ranked summaries
-    
     if print_summaries:
         print("\nRanked Summary:")
         for key, value in ranked_summary.items():
@@ -95,23 +93,24 @@ def main(check_data=False,
         for key, value in ranked_summary_by_year.items():
             print(f"{key}:\n{value}\n")
 
-    # ALL DATA ANALYSIS ----
+
+    # (3) PLOT ALL DATA ----
     from analysis.annual_plot import plot_annual_stats, plot_seasonal_stats
     plot_annual_stats(summary_by_year_month, plot_folder)
     plot_annual_stats(summary_by_year, plot_folder)
     plot_seasonal_stats(summary_by_year_month, plot_folder)
 
-    # SURF DATA WRAPPED ----
+
+    # (4) SURF DATA WRAPPED ----
     # create and save (as JSON) the data needed for the surfing-wrapped animation project
-    
     if surf_wrapped:
         from analysis.surfing_wrapped import create_surf_wrapped_json
         # Create the JSON output folder
         json_output_folder = os.path.join(os.path.dirname(__file__), 'output', 'surfing_wrapped')
         create_surf_wrapped_json(surf_data_df, summary_by_year, ranked_summary_by_year, json_output_folder)
 
-    # SURFBOARD ANALYSIS ----
-    
+
+    # (5) SURFBOARD ANALYSIS ----
     if surfboard_analysis:
         from analysis.surfboards import (process_surfboard_hrs, 
                                          plot_surfboard_hrs,
@@ -129,7 +128,7 @@ def main(check_data=False,
         # TODO: maybe average length per month - weighted by hours used?
 
 
-    # REGION ANALYSIS ----
+    # (6) REGION ANALYSIS ----
     from analysis.regions import (process_region_hours, 
                                   plot_regions_across_time,
                                   process_time_of_day,
@@ -145,16 +144,16 @@ def main(check_data=False,
                      plot_folder=plot_folder)
 
 
-    # WETSUIT ANALYSIS ----
+    # (7) WETSUIT ANALYSIS ----
     # TODO: ADD
-    
 
-    # SPOT ANALYSIS ----
+
+    # (8) SPOT ANALYSIS ----
     # Link historic NOAA data to surf-data and determine the conditions that lead to a spot being 'good' (i.e. wave quality of 8 or higher)
     # TODO: ADD
 
 
-    # GEOSPATIAL ANALYSIS ----
+    # (9) GEOSPATIAL ANALYSIS ----
     # TODO: ADD
 
     #TEMP
