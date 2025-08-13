@@ -4,6 +4,7 @@
     "total_hours": 403.75,
     "total_barrels": 0.0,
     "total_unique_spots": 64,
+    "broken_boards_count": 3,
     "biggest_day": {
         "date": "2020-09-25T00:00:00",
         "total_hours": 5.5
@@ -55,7 +56,9 @@
             "region": "Central CA",
             "wave_quality": 10.0,
             "surfing_quality": 10.0,
-            "barrels_made": NaN
+            "barrels_made": NaN,
+            "month": "March",
+            "day": "16th"
         },
         {
             "year": 2020,
@@ -66,7 +69,9 @@
             "region": "Southern CA",
             "wave_quality": 10.0,
             "surfing_quality": 10.0,
-            "barrels_made": NaN
+            "barrels_made": NaN,
+            "month": "October",
+            "day": "15th"
         },
         {
             "year": 2020,
@@ -77,7 +82,9 @@
             "region": "Central CA",
             "wave_quality": 10.0,
             "surfing_quality": 10.0,
-            "barrels_made": NaN
+            "barrels_made": NaN,
+            "month": "December",
+            "day": "20th"
         },
         {
             "year": 2020,
@@ -88,7 +95,9 @@
             "region": "Central CA",
             "wave_quality": 9.5,
             "surfing_quality": 10.0,
-            "barrels_made": NaN
+            "barrels_made": NaN,
+            "month": "February",
+            "day": "22nd"
         },
         {
             "year": 2020,
@@ -99,7 +108,9 @@
             "region": "Central CA",
             "wave_quality": 10.0,
             "surfing_quality": 9.0,
-            "barrels_made": NaN
+            "barrels_made": NaN,
+            "month": "February",
+            "day": "12th"
         }
     ]
 }

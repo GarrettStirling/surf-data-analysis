@@ -1,9 +1,11 @@
 import json
 import os
+import numpy as np
 
 from src.utils import NpEncoder
 
-def create_surf_wrapped_json(surf_data_df, 
+def create_surf_wrapped_json(surf_data_df_all_years, 
+                             surf_data_dict,
                              summary_by_year, 
                              ranked_summary_by_year,
                              json_output_folder):
@@ -21,26 +23,34 @@ def create_surf_wrapped_json(surf_data_df,
       - Top 5 Surf sessions, by rank (parameter which includes wave quality, surf quality and barrel count). With this data; date, region, spot, wave quality, surf quality, barrel count
 
     Arguments:
-        surf_data_df -- DataFrame containing the surf data
+        surf_data_df_all_years -- DataFrame containing the surf data
         summary_by_year -- DataFrame containing the summary by year
         ranked_summary_by_year -- DataFrame containing the ranked summary by year
         json_output_folder -- Folder where the JSON files will be saved
     """
 
-    years = surf_data_df['year'].unique()
+    years = surf_data_df_all_years['year'].unique()
 
     top_spots_by_time_by_year = ranked_summary_by_year['top_spots_by_time']
     top_sessions_by_year = ranked_summary_by_year['top_sessions_by_rank']
 
+    # process surfboards data - figure out how many were broken per year
+    surfboard_df = surf_data_dict['Surfboards']
+    # filter to cases where the board was broken, using .query
+    surfboard_broken = surfboard_df[surfboard_df['gone'] == 'broken']
+    # convert date, in format YYYYMMDD, to a year column
+    surfboard_broken['year'] = surfboard_broken['when_gone'].astype(str).str[:4].astype(int)
+
     for year in years:
-        surf_data_single_year = surf_data_df[surf_data_df['year'] == year]
+        surf_data_df = surf_data_df_all_years[surf_data_df_all_years['year'] == year]
         summary = summary_by_year[summary_by_year['year'] == year]
         top_spots_by_time = top_spots_by_time_by_year[top_spots_by_time_by_year['year'] == year]
         top_sessions = top_sessions_by_year[top_sessions_by_year['year'] == year]
+        broken_boards = surfboard_broken[surfboard_broken['year'] == year]
 
         # For the top 5 spots, add in the total number of sessions
-        # 1. inner join surf_data_single_year and top_spots_by_time on spot
-        top_spots_n_sessions = top_spots_by_time.merge(surf_data_single_year, on=['subregion', 'spot'], how='inner')
+        # 1. inner join surf_data_df and top_spots_by_time on spot
+        top_spots_n_sessions = top_spots_by_time.merge(surf_data_df, on=['subregion', 'spot'], how='inner')
         # 2. group by subregion, spot and count the number of sessions
         top_spots_n_sessions = (top_spots_n_sessions
                                 .groupby(['subregion', 'spot'], as_index = False)
@@ -51,15 +61,27 @@ def create_surf_wrapped_json(surf_data_df,
                                                     how='left'))
 
         # For the top 5 sessions, add in the region, wave quality, surf quality and barrel count
-        top_sessions_merge = top_sessions.merge(surf_data_single_year[['date', 'spot', 'region', 'wave_quality', 'surfing_quality', 'barrels_made']], 
+        top_sessions_merge = top_sessions.merge(surf_data_df[['date', 'spot', 'region', 'wave_quality', 'surfing_quality', 'barrels_made']], 
                                                 on=['date', 'spot'], 
                                                 how='left')
+        # pull out month, in character format
+        top_sessions_merge['month'] = top_sessions_merge['date'].dt.month_name()
+        # pull out day as a number and add "/st/nd/th" depending on the day
+        top_sessions_merge['day'] = top_sessions_merge['date'].dt.day
+        top_sessions_merge['day_suffix'] = np.select(
+            [top_sessions_merge['day'].isin([1, 21, 31]),
+              top_sessions_merge['day'].isin([2, 22]),
+              top_sessions_merge['day'].isin([3, 23])],
+            ['st', 'nd', 'rd'],
+            default='th')
+        top_sessions_merge['day'] = top_sessions_merge['day'].astype(str) + top_sessions_merge['day_suffix']
+        top_sessions_merge = top_sessions_merge.drop(columns=['day_suffix'])
 
         # "biggest_day" add in the single day with most hours in the water
-        hours_per_day = surf_data_single_year.groupby('date')['hrs'].sum().reset_index()
+        hours_per_day = surf_data_df.groupby('date')['hrs'].sum().reset_index()
         hours_per_day.columns = ['date', 'total_hours']
         biggest_day = hours_per_day.loc[hours_per_day['total_hours'].idxmax()]
-        
+
         # Create a dictionary to hold the wrapped data
         wrapped_data = {
             'year': year,
@@ -67,6 +89,7 @@ def create_surf_wrapped_json(surf_data_df,
             'total_hours': summary['total_hours'].values[0],
             'total_barrels': summary['total_barrels_made'].values[0],
             'total_unique_spots': summary['total_unique_spots'].values[0],
+            'broken_boards_count': broken_boards.shape[0],
             'biggest_day': biggest_day.to_dict(),
             'top_spots': top_spots_by_time.to_dict(orient='records'), 
             'top_sessions': top_sessions_merge.to_dict(orient='records')

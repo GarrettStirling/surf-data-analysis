@@ -1,29 +1,41 @@
-# Basic, single values per year
-def create_simple_summary(df, group_cols):
+
+def create_simple_summary(df, group_cols=None):
     """
     Create an simple summary of surf data, grouped over any time variables.
     Arguments:
         df: DataFrame to summarise
         group_cols: List of columns to group by (e.g., ['year'], ['year', 'month'])
     """
-    annual_summary = (df
-        .groupby(group_cols, as_index=False)
-        .agg(total_hours=('hrs', 'sum'),
-             total_sessions=('year', 'count'),
-             total_unique_spots=('spot', 'nunique'),
-             total_unique_subregions=('subregion', 'nunique'),
-             total_unique_regions=('region', 'nunique'),
-             total_barrels_made=('barrels_made', 'sum'),
-             most_freq_spot=('spot', lambda x: x.value_counts().index[0] if not x.isna().all() else None),
-             most_freq_subregion=('subregion', lambda x: x.value_counts().index[0] if not x.isna().all() else None),
-             most_freq_region=('region', lambda x: x.value_counts().index[0] if not x.isna().all() else None),
-             most_freq_board=('board', lambda x: x.value_counts().index[0] if not x.isna().all() else None),
-             most_freq_wetsuit=('wetty', lambda x: x.value_counts().index[0] if not x.isna().all() else None))
-        .reset_index())
     
-    # Add in the 'year-month' column if we are grouping over both
+    # If no grouping columns, create a dummy grouping column
+    # this is because .agg() behaves differently on a dataframe then on a GroupBy object
+    if group_cols is None:
+        df['_dummy_'] = 0
+        group_cols = ['_dummy_']
+    
+    annual_summary = (df
+                     .groupby(group_cols, as_index=False)
+                     .agg(total_hours=('hrs', lambda x: x.sum(skipna=True)),
+                          total_sessions=('year', lambda x: x.count()),
+                          total_unique_spots=('spot', 'nunique'),
+                          total_unique_subregions=('subregion', 'nunique'),
+                          total_unique_regions=('region', 'nunique'),
+                          total_barrels_made=('barrels_made', 'sum'),
+                          most_freq_spot=('spot', lambda x: x.value_counts().index[0] if not x.isna().all() else None),
+                          most_freq_subregion=('subregion', lambda x: x.value_counts().index[0] if not x.isna().all() else None),
+                          most_freq_region=('region', lambda x: x.value_counts().index[0] if not x.isna().all() else None),
+                          most_freq_board=('board', lambda x: x.value_counts().index[0] if not x.isna().all() else None),
+                          most_freq_wetsuit=('wetty', lambda x: x.value_counts().index[0] if not x.isna().all() else None))
+                     .reset_index(drop=True))
+    
+    # Remove dummy column if we added it
+    if '_dummy_' in annual_summary.columns:
+        annual_summary = annual_summary.drop('_dummy_', axis=1)
+    
+    # Add in the 'year-month' column if we are grouping over both year and month
     if 'year' in group_cols and 'month' in group_cols:
-        annual_summary['year_month'] = (annual_summary['year'].astype(str) + '-' + annual_summary['month'].apply(lambda x: f'{int(x):02d}'))
+        annual_summary['year_month'] = (annual_summary['year'].astype(str) + '-' + 
+                                            annual_summary['month'].apply(lambda x: f'{int(x):02d}'))
 
     return annual_summary
 

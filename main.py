@@ -10,9 +10,9 @@ def main(check_data=False,
          save_plots=False,
          surf_wrapped=True,
          print_summaries=False,
-         surfboard_analysis=True):
+         surfboard_analysis=False):
     """
-    Main function to read, process, and visualize my surf data.
+    Main function to read, process, summarise, and visualize my surf data.
     """
 
     # SETUP -------------------------------------------------------------------
@@ -77,6 +77,7 @@ def main(check_data=False,
     from analysis.summarise import create_simple_summary, create_ranked_summary
     
     # Basic, single values per year and per year+month
+    summary_all = create_simple_summary(surf_data_df)
     summary_by_year = create_simple_summary(surf_data_df, group_cols=['year'])
     summary_by_year_month = create_simple_summary(surf_data_df, group_cols=['year', 'month', 'season'])
 
@@ -103,12 +104,21 @@ def main(check_data=False,
 
     # (4) SURF DATA WRAPPED ----
     # create and save (as JSON) the data needed for the surfing-wrapped animation project
+    # TODO: Create an output with all the data (summary_all)
     if surf_wrapped:
         from analysis.surfing_wrapped import create_surf_wrapped_json
         # Create the JSON output folder
         json_output_folder = os.path.join(os.path.dirname(__file__), 'output', 'surfing_wrapped')
-        create_surf_wrapped_json(surf_data_df, summary_by_year, ranked_summary_by_year, json_output_folder)
-
+        create_surf_wrapped_json(surf_data_df,
+                                 surf_data_dict, 
+                                 summary_by_year, 
+                                 ranked_summary_by_year, 
+                                 json_output_folder)
+        # create_surf_wrapped_all_json(surf_data_df,
+            #                          surf_data_dict, 
+            #                          summary_all, 
+            #                          ranked_summary, 
+            #                          json_output_folder)
 
     # (5) SURFBOARD ANALYSIS ----
     if surfboard_analysis:

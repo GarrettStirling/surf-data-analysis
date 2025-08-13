@@ -4,6 +4,7 @@
     "total_hours": 243.75,
     "total_barrels": 63.0,
     "total_unique_spots": 67,
+    "broken_boards_count": 4,
     "biggest_day": {
         "date": "2023-10-14T00:00:00",
         "total_hours": 6.5
@@ -55,7 +56,9 @@
             "region": "Southern CA",
             "wave_quality": 9.0,
             "surfing_quality": 10.0,
-            "barrels_made": 6.0
+            "barrels_made": 6.0,
+            "month": "January",
+            "day": "28th"
         },
         {
             "year": 2023,
@@ -66,7 +69,9 @@
             "region": "Southern CA",
             "wave_quality": 10.0,
             "surfing_quality": 8.0,
-            "barrels_made": 2.0
+            "barrels_made": 2.0,
+            "month": "January",
+            "day": "11th"
         },
         {
             "year": 2023,
@@ -77,7 +82,9 @@
             "region": "Hawaii",
             "wave_quality": 8.0,
             "surfing_quality": 8.0,
-            "barrels_made": 4.0
+            "barrels_made": 4.0,
+            "month": "March",
+            "day": "4th"
         },
         {
             "year": 2023,
@@ -88,7 +95,9 @@
             "region": "Hawaii",
             "wave_quality": 10.0,
             "surfing_quality": 8.0,
-            "barrels_made": 1.0
+            "barrels_made": 1.0,
+            "month": "March",
+            "day": "21st"
         },
         {
             "year": 2023,
@@ -99,7 +108,9 @@
             "region": "Hawaii",
             "wave_quality": 10.0,
             "surfing_quality": 7.0,
-            "barrels_made": 2.0
+            "barrels_made": 2.0,
+            "month": "March",
+            "day": "24th"
         }
     ]
 }

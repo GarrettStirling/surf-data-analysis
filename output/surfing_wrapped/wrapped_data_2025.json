@@ -1,14 +1,22 @@
 {
     "year": 2025,
-    "total_sessions": 75,
-    "total_hours": 106.7,
-    "total_barrels": 53.0,
-    "total_unique_spots": 36,
+    "total_sessions": 82,
+    "total_hours": 117.2,
+    "total_barrels": 55.5,
+    "total_unique_spots": 40,
+    "broken_boards_count": 2,
     "biggest_day": {
         "date": "2025-06-06T00:00:00",
         "total_hours": 5.5
     },
     "top_spots": [
+        {
+            "year": 2025,
+            "subregion": "Santa Cruz",
+            "spot": "Waddell Reef",
+            "total_hours": 14.5,
+            "total_sessions": 10
+        },
         {
             "year": 2025,
             "subregion": "Nicaragua",
@@ -22,13 +30,6 @@
             "spot": "Punta Mango",
             "total_hours": 11.5,
             "total_sessions": 7
-        },
-        {
-            "year": 2025,
-            "subregion": "Santa Cruz",
-            "spot": "Waddell Reef",
-            "total_hours": 11.5,
-            "total_sessions": 8
         },
         {
             "year": 2025,
@@ -55,7 +56,9 @@
             "region": "Other",
             "wave_quality": 8.0,
             "surfing_quality": 10.0,
-            "barrels_made": 5.0
+            "barrels_made": 5.0,
+            "month": "June",
+            "day": "3rd"
         },
         {
             "year": 2025,
@@ -66,7 +69,9 @@
             "region": "Other",
             "wave_quality": 10.0,
             "surfing_quality": 8.0,
-            "barrels_made": 4.0
+            "barrels_made": 4.0,
+            "month": "March",
+            "day": "4th"
         },
         {
             "year": 2025,
@@ -77,7 +82,9 @@
             "region": "Central CA",
             "wave_quality": 8.5,
             "surfing_quality": 9.0,
-            "barrels_made": 4.0
+            "barrels_made": 4.0,
+            "month": "January",
+            "day": "5th"
         },
         {
             "year": 2025,
@@ -88,7 +95,9 @@
             "region": "Other",
             "wave_quality": 10.0,
             "surfing_quality": 9.5,
-            "barrels_made": 6.0
+            "barrels_made": 6.0,
+            "month": "March",
+            "day": "2nd"
         },
         {
             "year": 2025,
@@ -99,7 +108,9 @@
             "region": "Other",
             "wave_quality": 8.0,
             "surfing_quality": 8.0,
-            "barrels_made": 1.0
+            "barrels_made": 1.0,
+            "month": "March",
+            "day": "2nd"
         },
         {
             "year": 2025,
@@ -110,7 +121,9 @@
             "region": "Other",
             "wave_quality": 8.0,
             "surfing_quality": 8.0,
-            "barrels_made": 5.0
+            "barrels_made": 5.0,
+            "month": "May",
+            "day": "23rd"
         }
     ]
 }

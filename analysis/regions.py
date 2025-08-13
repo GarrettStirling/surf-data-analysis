@@ -70,6 +70,13 @@ def plot_regions_across_time(plot_df,
     fig, ax = plt.subplots(1, figsize=(16,4), facecolor=bg_color)
     ax.set_facecolor(bg_color)
 
+    # Title and subtitle
+    fig.suptitle('Hours Spent Surfing in Each Region', color='w', fontsize=16, fontweight='bold', y=0.88)
+    ax.set_title('Hours are summed per month', color='w', fontsize=12, pad=50)  
+
+    # Keep tight_layout at the end but with padding
+    plt.tight_layout(rect=[0, 0, 1, 0.9])  # Give more space at top
+
     # Do the plotting
     stack = 0
     for region in region_list:
@@ -104,13 +111,6 @@ def plot_regions_across_time(plot_df,
     # grid
     ax.set_axisbelow(True)
     ax.xaxis.grid(color='lightgrey', linestyle='dashed', alpha=.5, lw=0.5)
-
-    # Title
-    plt.title('Hours Spent Surfing in Each Region', color='w', fontsize=16, fontweight='bold')
-    # sub title
-    plt.suptitle('Hours summed per month', color='w', fontsize=14)
-
-    plt.tight_layout()
 
     if plot_folder:
         filename = 'region_hours_across_time.png'
