@@ -74,6 +74,10 @@ def process_surf_data(df,
 
     # add in the seasons
     df['season'] = df['month'].apply(assign_season)
-    
+
+    # add in a session_id which is a 3-digit number, restarting per year
+    df['session_id'] = df.groupby('year').cumcount() + 1
+    df['session_id'] = df['session_id'].astype(str).str.zfill(3)
+
     return df
 

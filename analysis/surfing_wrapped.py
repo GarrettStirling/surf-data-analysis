@@ -61,8 +61,8 @@ def create_surf_wrapped_json(surf_data_df_all_years,
                                                     how='left'))
 
         # For the top 5 sessions, add in the region, wave quality, surf quality and barrel count
-        top_sessions_merge = top_sessions.merge(surf_data_df[['date', 'spot', 'region', 'wave_quality', 'surfing_quality', 'barrels_made']], 
-                                                on=['date', 'spot'], 
+        top_sessions_merge = top_sessions.merge(surf_data_df[['session_id', 'date', 'spot', 'region', 'wave_quality', 'surfing_quality', 'barrels_made']], 
+                                                on=['session_id', 'date', 'spot'], # THIS IS A PROBLEM!!!
                                                 how='left')
         # pull out month, in character format
         top_sessions_merge['month'] = top_sessions_merge['date'].dt.month_name()

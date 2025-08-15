@@ -49,9 +49,24 @@
     "top_sessions": [
         {
             "year": 2021,
+            "date": "2021-02-16T00:00:00",
+            "subregion": "Oahu",
+            "spot": "Pipeline",
+            "session_id": "055",
+            "session_value": 25.0,
+            "region": "Hawaii",
+            "wave_quality": 10.0,
+            "surfing_quality": 9.0,
+            "barrels_made": 6.0,
+            "month": "February",
+            "day": "16th"
+        },
+        {
+            "year": 2021,
             "date": "2021-09-29T00:00:00",
             "subregion": "Ventura",
             "spot": "Oxnard Shores",
+            "session_id": "246",
             "session_value": 24.0,
             "region": "Southern CA",
             "wave_quality": 10.0,
@@ -65,6 +80,7 @@
             "date": "2021-10-30T00:00:00",
             "subregion": "Outer Banks",
             "spot": "North Avon",
+            "session_id": "261",
             "session_value": 24.0,
             "region": "Other",
             "wave_quality": 10.0,
@@ -78,6 +94,7 @@
             "date": "2021-04-22T00:00:00",
             "subregion": "Oahu",
             "spot": "Rocky Point",
+            "session_id": "143",
             "session_value": 21.0,
             "region": "Hawaii",
             "wave_quality": 10.0,
@@ -91,6 +108,7 @@
             "date": "2021-08-20T00:00:00",
             "subregion": "Ventura",
             "spot": "Harbor",
+            "session_id": "206",
             "session_value": 21.0,
             "region": "Southern CA",
             "wave_quality": 10.0,
@@ -98,19 +116,6 @@
             "barrels_made": 3.0,
             "month": "August",
             "day": "20th"
-        },
-        {
-            "year": 2021,
-            "date": "2021-09-15T00:00:00",
-            "subregion": "Ventura",
-            "spot": "Harbor",
-            "session_value": 21.0,
-            "region": "Southern CA",
-            "wave_quality": 9.0,
-            "surfing_quality": 8.0,
-            "barrels_made": 4.0,
-            "month": "September",
-            "day": "15th"
         }
     ]
 }

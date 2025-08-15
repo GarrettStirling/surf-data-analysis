@@ -52,6 +52,7 @@
             "date": "2023-01-28T00:00:00",
             "subregion": "Ventura",
             "spot": "Ventura Rivermouth",
+            "session_id": "017",
             "session_value": 25.0,
             "region": "Southern CA",
             "wave_quality": 9.0,
@@ -65,6 +66,7 @@
             "date": "2023-01-11T00:00:00",
             "subregion": "Ventura",
             "spot": "Silver Strand",
+            "session_id": "006",
             "session_value": 20.0,
             "region": "Southern CA",
             "wave_quality": 10.0,
@@ -75,9 +77,24 @@
         },
         {
             "year": 2023,
+            "date": "2023-02-19T00:00:00",
+            "subregion": "Oahu",
+            "spot": "Rocky Point",
+            "session_id": "041",
+            "session_value": 20.0,
+            "region": "Hawaii",
+            "wave_quality": 9.0,
+            "surfing_quality": 8.0,
+            "barrels_made": 3.0,
+            "month": "February",
+            "day": "19th"
+        },
+        {
+            "year": 2023,
             "date": "2023-03-04T00:00:00",
             "subregion": "Oahu",
             "spot": "Rockpile",
+            "session_id": "056",
             "session_value": 20.0,
             "region": "Hawaii",
             "wave_quality": 8.0,
@@ -88,29 +105,17 @@
         },
         {
             "year": 2023,
-            "date": "2023-03-21T00:00:00",
-            "subregion": "Oahu",
-            "spot": "Log Cabins",
+            "date": "2023-01-12T00:00:00",
+            "subregion": "Ventura",
+            "spot": "Silver Strand",
+            "session_id": "007",
             "session_value": 19.0,
-            "region": "Hawaii",
+            "region": "Southern CA",
             "wave_quality": 10.0,
             "surfing_quality": 8.0,
             "barrels_made": 1.0,
-            "month": "March",
-            "day": "21st"
-        },
-        {
-            "year": 2023,
-            "date": "2023-03-24T00:00:00",
-            "subregion": "Oahu",
-            "spot": "Rocky Point",
-            "session_value": 19.0,
-            "region": "Hawaii",
-            "wave_quality": 10.0,
-            "surfing_quality": 7.0,
-            "barrels_made": 2.0,
-            "month": "March",
-            "day": "24th"
+            "month": "January",
+            "day": "12th"
         }
     ]
 }

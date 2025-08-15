@@ -7,13 +7,16 @@ def create_simple_summary(df, group_cols=None):
         group_cols: List of columns to group by (e.g., ['year'], ['year', 'month'])
     """
     
+    # make copy
+    df_copy = df.copy()
+
     # If no grouping columns, create a dummy grouping column
     # this is because .agg() behaves differently on a dataframe then on a GroupBy object
     if group_cols is None:
-        df['_dummy_'] = 0
+        df_copy['_dummy_'] = 0
         group_cols = ['_dummy_']
     
-    annual_summary = (df
+    annual_summary = (df_copy
                      .groupby(group_cols, as_index=False)
                      .agg(total_hours=('hrs', lambda x: x.sum(skipna=True)),
                           total_sessions=('year', lambda x: x.count()),
@@ -154,7 +157,7 @@ def create_ranked_summary(surf_data_df, top_n=5, by_year=True):
     # Top 5 Sessions by session_value
     ranked_summary_dict['top_sessions_by_rank'] = top_n_by_agg_type(
         surf_data_df,
-        grp_cols=['date', 'subregion', 'spot'],
+        grp_cols=['date', 'subregion', 'spot', 'session_id'],
         top_n=top_n,
         agg_type='mean',
         agg_col='session_value',

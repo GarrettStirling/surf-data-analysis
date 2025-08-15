@@ -52,6 +52,7 @@
             "date": "2024-01-21T00:00:00",
             "subregion": "Monterey",
             "spot": "Moss Landing",
+            "session_id": "009",
             "session_value": 27.0,
             "region": "Central CA",
             "wave_quality": 10.0,
@@ -65,6 +66,7 @@
             "date": "2024-08-31T00:00:00",
             "subregion": "Madagascar",
             "spot": "Kamikazes",
+            "session_id": "102",
             "session_value": 25.0,
             "region": "Other",
             "wave_quality": 10.0,
@@ -75,9 +77,24 @@
         },
         {
             "year": 2024,
+            "date": "2024-08-24T00:00:00",
+            "subregion": "Madagascar",
+            "spot": "Maggots",
+            "session_id": "091",
+            "session_value": 22.0,
+            "region": "Other",
+            "wave_quality": 9.0,
+            "surfing_quality": 8.0,
+            "barrels_made": 5.0,
+            "month": "August",
+            "day": "24th"
+        },
+        {
+            "year": 2024,
             "date": "2024-10-26T00:00:00",
             "subregion": "San Mateo",
             "spot": "San Gregorio",
+            "session_id": "121",
             "session_value": 22.0,
             "region": "Northern CA",
             "wave_quality": 8.0,
@@ -91,6 +108,7 @@
             "date": "2024-09-11T00:00:00",
             "subregion": "Reunion",
             "spot": "Aigrettes",
+            "session_id": "106",
             "session_value": 21.0,
             "region": "Other",
             "wave_quality": 9.0,
@@ -98,19 +116,6 @@
             "barrels_made": 3.0,
             "month": "September",
             "day": "11th"
-        },
-        {
-            "year": 2024,
-            "date": "2024-08-31T00:00:00",
-            "subregion": "Madagascar",
-            "spot": "Flame Balls",
-            "session_value": 20.0,
-            "region": "Other",
-            "wave_quality": 9.0,
-            "surfing_quality": 8.0,
-            "barrels_made": 3.0,
-            "month": "August",
-            "day": "31st"
         }
     ]
 }
