@@ -4,7 +4,7 @@ This repo is used to analyize and visualize my personal surf data, where I have 
 As of July 2025, there over 1500 surf sessions recorded.
 
 # To Do
-- [ ] Add in annual summaries; counts of sessions, boards, barrels, top 5 spots, etc. per year
+- [x] Add in annual summaries; counts of sessions, boards, barrels, top 5 spots, etc. per year
     - build this into an Adobe After Effects workflow which spits out a yearly "Surfing Wrapped" with data behind animations
 - [ ] Add in spot analysis; for certain sessions that were labeled 'good' (wave quality > 9), what NOAA conditions were present?
 - [x] Add in regional analysis; timeline of regions surfed per month over all years and difference in surf time per region
